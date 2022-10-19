@@ -1,6 +1,10 @@
 import socket
 
+ipadress = 'localhost'
+port = 9999
+
 server = socket-socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind((ipadress, port))
 
 server.listen()
 client, addr = server.accept()
