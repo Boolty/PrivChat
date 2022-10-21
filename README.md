@@ -3,8 +3,10 @@ Private Python Chat
 https://pythonprogramming.net/server-chatroom-sockets-tutorial-python-3/
 
 1. Start Server. STANDART PROT = 1234
-2. Change IP in client to Server IP.
-3. Change name in wind_PCR_Chat.py
+[WINDOWS]
+2. Download exe and ini.
+3. (OPEN Setting.ini and change Username and IP / PORT)
 OR
-3. Use CMD_PCR_Cha.py
+[LINUX]
+2. Change IP and PORT in .py file save.
 DONE!
