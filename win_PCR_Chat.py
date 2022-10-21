@@ -1,9 +1,18 @@
-import socket, errno, threading, ctypes, sys, re, os
+import socket, errno, threading, ctypes, sys, re, os, configparser
 from datetime import datetime
 from tkinter import *
 from tkinter import scrolledtext
 
 global HEADER_LENGTH, IP, PORT, username, my_username, client_socket
+
+
+# parse existing file
+config = configparser.ConfigParser()
+config.read('setting.ini')
+IP = config.get('settings', 'IP')
+PORT = config.get('settings', 'PORT')
+my_username = config.get('settings', 'username')
+
 
 window=Tk()
 name    = "PCR_Chat"
@@ -11,9 +20,9 @@ version = "Version. "
 ver     = "1.0.0"
 info    = "By Boolty"
 HEADER_LENGTH = 10
-IP = "84.190.240.212"
-PORT = 1234
-my_username = 'Alala'
+#IP = "84.190.240.212"
+#PORT = 1234
+#my_username = 'ALFONSO'
 
 
 window.title(name + " | " + version + ver + " | " + info)
@@ -26,7 +35,7 @@ window.geometry("500x300+10+10")
 # socket.SOCK_STREAM - TCP, conection-based, socket.SOCK_DGRAM - UDP, connectionless, datagrams, socket.SOCK_RAW - raw IP packets
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # Connect to a given ip and port
-client_socket.connect((IP, PORT))
+client_socket.connect((str(IP), int(PORT)))
 # Set connection to non-blocking state, so .recv() call won;t block, just return some exception we'll handle
 client_socket.setblocking(False)
 
@@ -37,7 +46,7 @@ def send():
     dt_string = now.strftime("%H:%M:%S")
     # Wait for user to input a message
     txt.config(state="normal")
-    txt.insert(INSERT,dt_string + ' ' + my_username + ' > ' + txtfld.get() + '\n')
+    txt.insert(INSERT, dt_string + ' ' + my_username + ' > ' + txtfld.get() + '\n')
     txt.see('insert')
     txt.config(state="disabled")
     message = dt_string + ' > ' + txtfld.get() + '\n'
@@ -130,6 +139,10 @@ btn.place(x=400, y=210)
 lbl = Label(window, text="Username: " + my_username, fg='black', font=("Helvetica", 16))
 lbl.place(x=5, y=210)
 
+
+#HOST DISPLAY
+lbl = Label(window, text="Server: " + str(IP) +':'+ str(PORT), fg='black', font=("Helvetica", 16))
+lbl.place(x=5, y=0)
 
 threading.Thread(target=chat, args=()).start()
 window.mainloop()
